@@ -1068,9 +1068,6 @@ class Ball(pygame.sprite.Sprite):
             self.c[1] += self.vy
             self.rect.x = self.c[0] // 1000
             self.rect.y = self.c[1] // 1000
-            # self.rect.x = self.x
-            # self.rect.y = self.y
-            # self.standart()
 
 
 class Board:
@@ -1126,7 +1123,6 @@ class Board:
         self.cell_size2 = cell_size2
         self.pause = False
         self._ = 0
-        # след. строка временно(генерируют поле с блоками)
         for i in (self.fons + self.board):
             for j in i:
                 if j is not None:
@@ -1175,13 +1171,6 @@ class Board:
                     if pygame.sprite.spritecollide(self.board[i][j], self.ls, True):
                         self.board[i][j].collide__()
         self.ball.update()
-
-        # if len(pygame.sprite.groupcollide(self.b, self.hr, False, False)):
-        #     if pygame.sprite.groupcollide(self.b, self.sprites, False, False):
-        #         self.ball.horizontalhit()
-        # if len(pygame.sprite.groupcollide(self.b, self.vr, False, False)):
-        #     if pygame.sprite.groupcollide(self.b, self.sprites, False, False):
-        #         self.ball.verticalhit()
         if pygame.sprite.spritecollide(self.ball, self.p, False):
             self.upscore(10)
             self.ball.platformhit()
@@ -1242,7 +1231,6 @@ class Board:
                 return
         self.hr.draw(screen)
         self.vr.draw(screen)
-        # 2 пред.строки рисуют сетку(она должна быть чёрной(совпадать с фоном) и быть ПОД остальными спрайтами
         self.pl.update(pygame.mouse.get_pos()[0])
         self.ball.update()
         self.fon.draw(screen)
