@@ -5,6 +5,7 @@ import time
 
 from pygame import display
 import pygame
+
 TEST = False
 
 random.seed(0)
@@ -18,6 +19,7 @@ class Line(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(x, y)
         self.x = x
         self.y = y
+
 
 class T(pygame.sprite.Sprite):
     def __init__(self, a, b, x, y, g):
@@ -66,6 +68,7 @@ class Block(pygame.sprite.Sprite):
                 self.rect = self.image.get_rect().move(block.x + block.rect.width - 1, block.y)
                 self.x = self.rect.x
                 self.y = self.rect.y
+
         self.board = board
         self.xy = (x, y)
         if board.lvl < 10:
@@ -75,17 +78,19 @@ class Block(pygame.sprite.Sprite):
         else:
             self.char = random.choice(Capsule.chars + [None] * 30)
         self.br = breaking
+
         def f(x, y):
-            a = int(x[0]*y)
+            a = int(x[0] * y)
             if a > 255:
                 a = 255
-            b = int(x[1]*y)
+            b = int(x[1] * y)
             if b > 255:
                 b = 255
-            c = int(x[2]*y)
+            c = int(x[2] * y)
             if c > 255:
                 c = 255
             return tuple([a, b, c])
+
         self.f = f
         self.col = col
         self.a = a
@@ -97,28 +102,27 @@ class Block(pygame.sprite.Sprite):
         self.breaking = breaking
         if self.breaking == 1:
             coef = 0.65
-            pygame.draw.rect(self.image, f(col, coef), (a//16, b//8*6, a//16*14, b//8))
-            pygame.draw.rect(self.image, f(col, coef), (a//16*2, b//8*5, a//16*13, b//8))
-            pygame.draw.rect(self.image, f(col, coef), (a//16*13, b//8, a//16, b//8*6))
-            pygame.draw.rect(self.image, f(col, coef), (a//16*14, 0, a//16, b//16*15))
+            pygame.draw.rect(self.image, f(col, coef), (a // 16, b // 8 * 6, a // 16 * 14, b // 8))
+            pygame.draw.rect(self.image, f(col, coef), (a // 16 * 2, b // 8 * 5, a // 16 * 13, b // 8))
+            pygame.draw.rect(self.image, f(col, coef), (a // 16 * 13, b // 8, a // 16, b // 8 * 6))
+            pygame.draw.rect(self.image, f(col, coef), (a // 16 * 14, 0, a // 16, b // 16 * 15))
         else:
             coef1 = 0.75
             coef2 = 0.5
-            pygame.draw.rect(self.image, f(col, coef1), (a//16, b//8*6, a//16*14, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16*2, b//8*5, a//16*13, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16*3, b//8*4, a//16*12, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16*3, b//8*2, a//16*12, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16*2, b//8, a//16*13, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16, 0, a//16*14, b//8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16, b // 8 * 6, a // 16 * 14, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16 * 2, b // 8 * 5, a // 16 * 13, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16 * 3, b // 8 * 4, a // 16 * 12, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16 * 3, b // 8 * 2, a // 16 * 12, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16 * 2, b // 8, a // 16 * 13, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16, 0, a // 16 * 14, b // 8))
 
-            pygame.draw.rect(self.image, f(col, coef2), (a//16*11, b//8*3, a//16, b//8))
-            pygame.draw.rect(self.image, f(col, coef2), (a//16*12, b//8*2, a//16, b//8*3))
-            pygame.draw.rect(self.image, f(col, coef2), (a//16*13, b//8, a//16, b//8*5))
-            pygame.draw.rect(self.image, f(col, coef2), (a//16*14, 0, a//16, b//8*7))
+            pygame.draw.rect(self.image, f(col, coef2), (a // 16 * 11, b // 8 * 3, a // 16, b // 8))
+            pygame.draw.rect(self.image, f(col, coef2), (a // 16 * 12, b // 8 * 2, a // 16, b // 8 * 3))
+            pygame.draw.rect(self.image, f(col, coef2), (a // 16 * 13, b // 8, a // 16, b // 8 * 5))
+            pygame.draw.rect(self.image, f(col, coef2), (a // 16 * 14, 0, a // 16, b // 8 * 7))
 
-        pygame.draw.rect(self.image, (0, 0, 0), (0, b//8*7, a, b//8))
-        pygame.draw.rect(self.image, (0, 0, 0), (a//16*15, 0, a//16, b))
-
+        pygame.draw.rect(self.image, (0, 0, 0), (0, b // 8 * 7, a, b // 8))
+        pygame.draw.rect(self.image, (0, 0, 0), (a // 16 * 15, 0, a // 16, b))
 
         self.x = x
         self.y = y
@@ -149,16 +153,17 @@ class Block(pygame.sprite.Sprite):
         if ball.flag:
             return
         if pygame.sprite.collide_mask(ball, self.vl1):
-            ball.vx = - abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16))//16
+            ball.vx = - abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16)) // 16
         if pygame.sprite.collide_mask(ball, self.vl2):
-            ball.vx = abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16))//16
+            ball.vx = abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16)) // 16
         if pygame.sprite.collide_mask(ball, self.hl1):
-            ball.vy = - abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16))//16
+            ball.vy = - abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16)) // 16
         if pygame.sprite.collide_mask(ball, self.hl2):
-            ball.vy = abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16))//16
+            ball.vy = abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16)) // 16
 
     def update(self):
-        if self.iscolide == 1 and (self.f(self.col, self.coef)[0] != 255 and self.f(self.col, self.coef)[1] != 255 and self.f(self.col, self.coef)[2] != 255):
+        if self.iscolide == 1 and (self.f(self.col, self.coef)[0] != 255 and self.f(self.col, self.coef)[1] != 255 and
+                                   self.f(self.col, self.coef)[2] != 255):
             self.coef += 0.01
             self.coef0 += 0.01
             self.coef1 += 0.01
@@ -182,27 +187,27 @@ class Block(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, f(col, coef0), (0, 0, a, b), a)
         if self.breaking == 1:
             coef = self.coef
-            pygame.draw.rect(self.image, f(col, coef), (a//16, b//8*6, a//16*14, b//8))
-            pygame.draw.rect(self.image, f(col, coef), (a//16*2, b//8*5, a//16*13, b//8))
-            pygame.draw.rect(self.image, f(col, coef), (a//16*13, b//8, a//16, b//8*6))
-            pygame.draw.rect(self.image, f(col, coef), (a//16*14, 0, a//16, b//16*15))
+            pygame.draw.rect(self.image, f(col, coef), (a // 16, b // 8 * 6, a // 16 * 14, b // 8))
+            pygame.draw.rect(self.image, f(col, coef), (a // 16 * 2, b // 8 * 5, a // 16 * 13, b // 8))
+            pygame.draw.rect(self.image, f(col, coef), (a // 16 * 13, b // 8, a // 16, b // 8 * 6))
+            pygame.draw.rect(self.image, f(col, coef), (a // 16 * 14, 0, a // 16, b // 16 * 15))
         else:
             coef1 = self.coef1
             coef2 = self.coef2
-            pygame.draw.rect(self.image, f(col, coef1), (a//16, b//8*6, a//16*14, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16*2, b//8*5, a//16*13, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16*3, b//8*4, a//16*12, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16*3, b//8*2, a//16*12, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16*2, b//8, a//16*13, b//8))
-            pygame.draw.rect(self.image, f(col, coef1), (a//16, 0, a//16*14, b//8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16, b // 8 * 6, a // 16 * 14, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16 * 2, b // 8 * 5, a // 16 * 13, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16 * 3, b // 8 * 4, a // 16 * 12, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16 * 3, b // 8 * 2, a // 16 * 12, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16 * 2, b // 8, a // 16 * 13, b // 8))
+            pygame.draw.rect(self.image, f(col, coef1), (a // 16, 0, a // 16 * 14, b // 8))
 
-            pygame.draw.rect(self.image, f(col, coef2), (a//16*11, b//8*3, a//16, b//8))
-            pygame.draw.rect(self.image, f(col, coef2), (a//16*12, b//8*2, a//16, b//8*3))
-            pygame.draw.rect(self.image, f(col, coef2), (a//16*13, b//8, a//16, b//8*5))
-            pygame.draw.rect(self.image, f(col, coef2), (a//16*14, 0, a//16, b//8*7))
+            pygame.draw.rect(self.image, f(col, coef2), (a // 16 * 11, b // 8 * 3, a // 16, b // 8))
+            pygame.draw.rect(self.image, f(col, coef2), (a // 16 * 12, b // 8 * 2, a // 16, b // 8 * 3))
+            pygame.draw.rect(self.image, f(col, coef2), (a // 16 * 13, b // 8, a // 16, b // 8 * 5))
+            pygame.draw.rect(self.image, f(col, coef2), (a // 16 * 14, 0, a // 16, b // 8 * 7))
 
-        pygame.draw.rect(self.image, (0, 0, 0), (0, b//8*7, a, b//8))
-        pygame.draw.rect(self.image, (0, 0, 0), (a//16*15, 0, a//16, b))
+        pygame.draw.rect(self.image, (0, 0, 0), (0, b // 8 * 7, a, b // 8))
+        pygame.draw.rect(self.image, (0, 0, 0), (a // 16 * 15, 0, a // 16, b))
         self.rect = self.rect.move((self.x, self.y))
         self.rect.x = self.x
         self.rect.y = self.y
@@ -213,39 +218,43 @@ class Block(pygame.sprite.Sprite):
 
 class Capsule(pygame.sprite.Sprite):
     chars = list('LESBPMTN')
-    cols = {'L': (255//2, 255, 0), 'E': (0, 0, 255), 'S': (255, 0, 255), 'B': (255, 0, 0), 'P': (0, 0, 0), 'M': (0, 255, 255), 'T': (0, 255, 255), 'N': (150, 150, 255), None: None}
+    cols = {'L': (255 // 2, 255, 0), 'E': (0, 0, 255), 'S': (255, 0, 255), 'B': (255, 0, 0), 'P': (0, 0, 0),
+            'M': (0, 255, 255), 'T': (0, 255, 255), 'N': (150, 150, 255), None: None}
+
     def __init__(self, col, a, b, x, y, char, group):
         super().__init__(group)
+
         def f(x, y):
-            a = int(x[0]+y)
+            a = int(x[0] + y)
             if a > 255:
                 a = 255
-            b = int(x[1]+y)
+            b = int(x[1] + y)
             if b > 255:
                 b = 255
-            c = int(x[2]+y)
+            c = int(x[2] + y)
             if c > 255:
                 c = 255
             return tuple([a, b, c])
+
         if char is None:
             self.kill()
             return
         w = (255, 255, 255)
         c = 100
-        self.image = pygame.Surface((a, b//8*7), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, f(col, c), (0, b//8, a//16, b//8*5), a)
-        pygame.draw.rect(self.image, f(col, c), (a//16, 0, a//16*14, b//8*7), a)
-        pygame.draw.rect(self.image, f(col, c), (a//16*15, b//8, a//16, b//8*5), a)
-        pygame.draw.rect(self.image, w, (0, b//8*2, a//16, b//8), a)
-        pygame.draw.rect(self.image, w, (a//16, b//8, a//16*13, b//8), a)
-        pygame.draw.rect(self.image, col, (a//16, b//8*3, a//16, b//8*2), a)
-        pygame.draw.rect(self.image, col, (a//16*2, b//8*2, a//16*12, b//8*4), a)
-        pygame.draw.rect(self.image, col, (a//16*14, b//8*3, a//16, b//8*2), a)
+        self.image = pygame.Surface((a, b // 8 * 7), pygame.SRCALPHA, 32)
+        pygame.draw.rect(self.image, f(col, c), (0, b // 8, a // 16, b // 8 * 5), a)
+        pygame.draw.rect(self.image, f(col, c), (a // 16, 0, a // 16 * 14, b // 8 * 7), a)
+        pygame.draw.rect(self.image, f(col, c), (a // 16 * 15, b // 8, a // 16, b // 8 * 5), a)
+        pygame.draw.rect(self.image, w, (0, b // 8 * 2, a // 16, b // 8), a)
+        pygame.draw.rect(self.image, w, (a // 16, b // 8, a // 16 * 13, b // 8), a)
+        pygame.draw.rect(self.image, col, (a // 16, b // 8 * 3, a // 16, b // 8 * 2), a)
+        pygame.draw.rect(self.image, col, (a // 16 * 2, b // 8 * 2, a // 16 * 12, b // 8 * 4), a)
+        pygame.draw.rect(self.image, col, (a // 16 * 14, b // 8 * 3, a // 16, b // 8 * 2), a)
 
-        font = pygame.font.Font(None, b//8*10)
+        font = pygame.font.Font(None, b // 8 * 10)
         txt = font.render(char, True, (255, 255, 0))
         self.rect = txt.get_rect().move(x, y)
-        self.image.blit(txt, (a//16*6, b//8))
+        self.image.blit(txt, (a // 16 * 6, b // 8))
         self.vy = 1
         self.char = char
 
@@ -280,7 +289,7 @@ class Capsule(pygame.sprite.Sprite):
             board.ball.m()
         if self.char == 'T':
             board.pl.func = board.pl.standart
-            T(board.cell_size1 * board.width, 1, board.left, board.pl.rect.y + board.pl.a//16*4, board.gt)
+            T(board.cell_size1 * board.width, 1, board.left, board.pl.rect.y + board.pl.a // 16 * 4, board.gt)
             board.ball.standart()
         if self.char == 'N':
             board.lvl += 1
@@ -296,33 +305,36 @@ class FlyingOpponent(pygame.sprite.Sprite):
         a = board.cell_size1
         b = board.cell_size2
         col = tuple([random.randint(0, 255) for _ in range(3)])
+
         def f(x, y):
-            a = int(x[0]*y)
+            a = int(x[0] * y)
             if a > 255:
                 a = 255
-            b = int(x[1]*y)
+            b = int(x[1] * y)
             if b > 255:
                 b = 255
-            c = int(x[2]*y)
+            c = int(x[2] * y)
             if c > 255:
                 c = 255
             return tuple([a, b, c])
-        self.image = pygame.Surface((a//16*15, b//8*7), pygame.SRCALPHA, 32)
+
+        self.image = pygame.Surface((a // 16 * 15, b // 8 * 7), pygame.SRCALPHA, 32)
         coef = 0.65
-        pygame.draw.rect(self.image, col, (0, 0, a//16*15, b//8*7), a)
-        pygame.draw.rect(self.image, f(col, coef), (a//16, b//8*6, a//16*14, b//8))
-        pygame.draw.rect(self.image, f(col, coef), (a//16*2, b//8*5, a//16*13, b//8))
-        pygame.draw.rect(self.image, f(col, coef), (a//16*13, b//8, a//16, b//8*6))
-        pygame.draw.rect(self.image, f(col, coef), (a//16*14, 0, a//16, b//16*15))
-        self.rect = self.image.get_rect().move(random.randint(board.left, board.left + board.width*board.cell_size1), random.randint(board.top, board.top + board.height*board.cell_size2))
+        pygame.draw.rect(self.image, col, (0, 0, a // 16 * 15, b // 8 * 7), a)
+        pygame.draw.rect(self.image, f(col, coef), (a // 16, b // 8 * 6, a // 16 * 14, b // 8))
+        pygame.draw.rect(self.image, f(col, coef), (a // 16 * 2, b // 8 * 5, a // 16 * 13, b // 8))
+        pygame.draw.rect(self.image, f(col, coef), (a // 16 * 13, b // 8, a // 16, b // 8 * 6))
+        pygame.draw.rect(self.image, f(col, coef), (a // 16 * 14, 0, a // 16, b // 16 * 15))
+        self.rect = self.image.get_rect().move(random.randint(board.left, board.left + board.width * board.cell_size1),
+                                               random.randint(board.top, board.top + board.height * board.cell_size2))
         self.vx = random.choice([random.randint(1, 100), random.randint(-100, -1)])
         self.vy = random.choice([random.randint(1, 100), random.randint(-100, -1)])
         self._x = self.rect.x * 1000
         self._y = self.rect.y * 1000
 
     def update(self):
-        self._x += self.vx*3
-        self._y += self.vy*3
+        self._x += self.vx * 3
+        self._y += self.vy * 3
         self.rect.x = self._x // 1000
         self.rect.y = self._y // 1000
 
@@ -331,17 +343,19 @@ class Fon(pygame.sprite.Sprite):
     def __init__(self, a, x, y, group):
         super().__init__(group)
         self.col = (0, 0, 200)
+
         def f(x, y):
-            a = int(x[0]*y)
+            a = int(x[0] * y)
             if a > 255:
                 a = 255
-            b = int(x[1]*y)
+            b = int(x[1] * y)
             if b > 255:
                 b = 255
-            c = int(x[2]*y)
+            c = int(x[2] * y)
             if c > 255:
                 c = 255
             return tuple([a, b, c])
+
         self.a = a
         self.f = f
         self.x = x
@@ -352,33 +366,34 @@ class Fon(pygame.sprite.Sprite):
         self.coef1 = 0.8
         self.coef2 = 0.6
         for i in range(12):
-            pygame.draw.rect(self.image, f(self.col, self.coef2), (0, a//16*i, a//16*(12-i), a//16), a//16)
+            pygame.draw.rect(self.image, f(self.col, self.coef2), (0, a // 16 * i, a // 16 * (12 - i), a // 16),
+                             a // 16)
 
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*12, 0, a//16*4, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*11, a//16*1, a//16*5, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*10, a//16*2, a//16*6, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*9, a//16*3, a//16*7, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*8, a//16*4, a//16*8, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*8, a//16*5, a//16*8, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*8, a//16*6, a//16*8, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*8, a//16*7, a//16*8, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*12, a//16*8, a//16*4, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*13, a//16*9, a//16*3, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*14, a//16*10, a//16*2, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*15, a//16*11, a//16*1, a//16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 12, 0, a // 16 * 4, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 11, a // 16 * 1, a // 16 * 5, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 10, a // 16 * 2, a // 16 * 6, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 9, a // 16 * 3, a // 16 * 7, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 8, a // 16 * 4, a // 16 * 8, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 8, a // 16 * 5, a // 16 * 8, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 8, a // 16 * 6, a // 16 * 8, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 8, a // 16 * 7, a // 16 * 8, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 12, a // 16 * 8, a // 16 * 4, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 13, a // 16 * 9, a // 16 * 3, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 14, a // 16 * 10, a // 16 * 2, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 15, a // 16 * 11, a // 16 * 1, a // 16))
 
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*4, a//16*8, a//16*4, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*3, a//16*9, a//16*5, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16*2, a//16*10, a//16*6, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (a//16, a//16*11, a//16*7, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (0, a//16*12, a//16*9, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (0, a//16*13, a//16*10, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (0, a//16*14, a//16*11, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef1), (0, a//16*15, a//16*12, a//16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 4, a // 16 * 8, a // 16 * 4, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 3, a // 16 * 9, a // 16 * 5, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16 * 2, a // 16 * 10, a // 16 * 6, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (a // 16, a // 16 * 11, a // 16 * 7, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (0, a // 16 * 12, a // 16 * 9, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (0, a // 16 * 13, a // 16 * 10, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (0, a // 16 * 14, a // 16 * 11, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef1), (0, a // 16 * 15, a // 16 * 12, a // 16))
 
-        pygame.draw.rect(self.image, f(self.col, self.coef2), (a//16*8, a//16*8, a//16*3, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef2), (a//16*8, a//16*9, a//16*2, a//16))
-        pygame.draw.rect(self.image, f(self.col, self.coef2), (a//16*8, a//16*10, a//16, a//16))
+        pygame.draw.rect(self.image, f(self.col, self.coef2), (a // 16 * 8, a // 16 * 8, a // 16 * 3, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef2), (a // 16 * 8, a // 16 * 9, a // 16 * 2, a // 16))
+        pygame.draw.rect(self.image, f(self.col, self.coef2), (a // 16 * 8, a // 16 * 10, a // 16, a // 16))
 
         self.rect.x = self.x
         self.rect.y = self.y
@@ -387,8 +402,8 @@ class Fon(pygame.sprite.Sprite):
 class L(pygame.sprite.Sprite):
     def __init__(self, a, x, y, group):
         super().__init__(group)
-        self.image = pygame.Surface((a//16*2, a//16*8), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, (255, 255, 255), (0, 0, a//16*2, a//16*8), a//16*2)
+        self.image = pygame.Surface((a // 16 * 2, a // 16 * 8), pygame.SRCALPHA, 32)
+        pygame.draw.rect(self.image, (255, 255, 255), (0, 0, a // 16 * 2, a // 16 * 8), a // 16 * 2)
         self.rect = self.image.get_rect().move(x, y)
         self.vy = -8
 
@@ -403,21 +418,23 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self, board, a, x, y, group):
         super().__init__(group)
         self.board = board
+
         def f(x, y):
-            a = int(x[0]*y)
+            a = int(x[0] * y)
             if a > 255:
                 a = 255
-            b = int(x[1]*y)
+            b = int(x[1] * y)
             if b > 255:
                 b = 255
-            c = int(x[2]*y)
+            c = int(x[2] * y)
             if c > 255:
                 c = 255
             return tuple([a, b, c])
+
         self.f = f
         self.a = a
         w = (255, 255, 255)
-        r1 =(200, 0, 0)
+        r1 = (200, 0, 0)
         r2 = (255, 80, 80)
         r3 = (150, 0, 0)
         r4 = (100, 0, 0)
@@ -429,51 +446,51 @@ class Platform(pygame.sprite.Sprite):
         g5 = (80, 80, 80)
         g6 = (130, 130, 130)
         self.b = (0, 0, 255)
-        self.image = pygame.Surface((a*2, a//2), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, w, (0, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*31, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*3, 0, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*3, a//16, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*3, a//16*2, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*2, a//16*1, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*2, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*2, a//16*3, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*2, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*2, a//16*6, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*6, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*3, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*6, 0, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, b, (a//16*7, a//16, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, 0, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*8, a//16*2, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16*3, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, a//16*4, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*8, a//16*5, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*8, a//16*6, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*14, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*10, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*14, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*17, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*21, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*10, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*10, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*21, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*21, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*10, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*10, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*21, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*21, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*24, a//16, a//16, a//16*6), a//16)
+        self.image = pygame.Surface((a * 2, a // 2), pygame.SRCALPHA, 32)
+        pygame.draw.rect(self.image, w, (0, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 31, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 3, 0, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 3, a // 16, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 3, a // 16 * 2, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 2, a // 16 * 1, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 2, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 2, a // 16 * 3, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 2, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 2, a // 16 * 6, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 6, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 3, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 6, 0, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 7, a // 16, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, 0, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 8, a // 16 * 2, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16 * 3, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, a // 16 * 4, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 8, a // 16 * 5, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 8, a // 16 * 6, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 14, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 10, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 14, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 17, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 21, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 10, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 10, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 21, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 21, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 10, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 10, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 21, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 21, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 24, a // 16, a // 16, a // 16 * 6), a // 16)
 
-        pygame.draw.rect(self.image, r4, (a//16*25, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*25, a//16*6, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*29, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*25, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*25, a//16*1, a//16*4, a//16*3), a//16*2)
-        pygame.draw.rect(self.image, w, (a//16*25, a//16*2, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*25, 0, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*29, a//16*1, a//16, a//16*5), a//16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 25, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 25, a // 16 * 6, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 29, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 25, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 25, a // 16 * 1, a // 16 * 4, a // 16 * 3), a // 16 * 2)
+        pygame.draw.rect(self.image, w, (a // 16 * 25, a // 16 * 2, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 25, 0, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 29, a // 16 * 1, a // 16, a // 16 * 5), a // 16)
         self._x = x
         self._y = y
         self.x = self._x - a
@@ -506,51 +523,51 @@ class Platform(pygame.sprite.Sprite):
         g5 = (80, 80, 80)
         g6 = (130, 130, 130)
         self.b = (0, 0, 255)
-        self.image = pygame.Surface((a*2, a//2), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, w, (0, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*31, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*3, 0, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*3, a//16, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*3, a//16*2, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*2, a//16*1, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*2, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*2, a//16*3, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*2, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*2, a//16*6, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*6, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*3, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*6, 0, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, b, (a//16*7, a//16, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, 0, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*8, a//16*2, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16*3, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, a//16*4, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*8, a//16*5, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*8, a//16*6, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*14, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*10, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*14, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*17, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*21, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*10, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*10, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*21, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*21, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*10, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*10, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*21, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*21, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*24, a//16, a//16, a//16*6), a//16)
+        self.image = pygame.Surface((a * 2, a // 2), pygame.SRCALPHA, 32)
+        pygame.draw.rect(self.image, w, (0, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 31, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 3, 0, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 3, a // 16, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 3, a // 16 * 2, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 2, a // 16 * 1, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 2, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 2, a // 16 * 3, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 2, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 2, a // 16 * 6, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 6, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 3, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 6, 0, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 7, a // 16, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, 0, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 8, a // 16 * 2, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16 * 3, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, a // 16 * 4, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 8, a // 16 * 5, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 8, a // 16 * 6, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 14, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 10, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 14, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 17, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 21, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 10, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 10, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 21, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 21, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 10, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 10, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 21, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 21, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 24, a // 16, a // 16, a // 16 * 6), a // 16)
 
-        pygame.draw.rect(self.image, r4, (a//16*25, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*25, a//16*6, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*29, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*25, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*25, a//16*1, a//16*4, a//16*3), a//16*2)
-        pygame.draw.rect(self.image, w, (a//16*25, a//16*2, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*25, 0, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*29, a//16*1, a//16, a//16*5), a//16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 25, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 25, a // 16 * 6, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 29, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 25, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 25, a // 16 * 1, a // 16 * 4, a // 16 * 3), a // 16 * 2)
+        pygame.draw.rect(self.image, w, (a // 16 * 25, a // 16 * 2, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 25, 0, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 29, a // 16 * 1, a // 16, a // 16 * 5), a // 16)
         self._x = x
         self.x = self._x - a
         self.rect.x = self.x
@@ -574,66 +591,66 @@ class Platform(pygame.sprite.Sprite):
         g5 = (80, 80, 80)
         g6 = (130, 130, 130)
         self.b = (0, 0, 255)
-        self.image = pygame.Surface((a*3, a//2), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, w, (0, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*47, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*3, 0, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*3, a//16, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*3, a//16*2, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*2, a//16*1, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*2, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*2, a//16*3, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*2, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*2, a//16*6, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*6, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*3, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*6, 0, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, b, (a//16*7, a//16, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, 0, a//16*32, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16, a//16*32, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*8, a//16*2, a//16*32, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16*3, a//16*32, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, a//16*4, a//16*32, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*8, a//16*5, a//16*32, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*8, a//16*6, a//16*32, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*8, a//16*4, a//16*2, a//16*2), a//16*2)
-        pygame.draw.rect(self.image, g4, (a//16*9, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*22, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*13, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*13, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*13, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*13, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*13, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*18, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*18, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*18, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*18, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*18, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*22, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*25, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*29, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*29, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*29, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*29, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*29, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*34, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*34, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*34, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*34, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*34, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*38, a//16*4, a//16*2, a//16*2), a//16*2)
-        pygame.draw.rect(self.image, g4, (a//16*38, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*40, a//16, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*41, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*41, a//16*6, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*45, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*41, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*41, a//16*1, a//16*4, a//16*3), a//16*2)
-        pygame.draw.rect(self.image, w, (a//16*41, a//16*2, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*41, 0, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*45, a//16*1, a//16, a//16*5), a//16)
+        self.image = pygame.Surface((a * 3, a // 2), pygame.SRCALPHA, 32)
+        pygame.draw.rect(self.image, w, (0, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 47, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 3, 0, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 3, a // 16, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 3, a // 16 * 2, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 2, a // 16 * 1, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 2, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 2, a // 16 * 3, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 2, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 2, a // 16 * 6, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 6, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 3, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 6, 0, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 7, a // 16, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, 0, a // 16 * 32, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16, a // 16 * 32, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 8, a // 16 * 2, a // 16 * 32, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16 * 3, a // 16 * 32, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, a // 16 * 4, a // 16 * 32, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 8, a // 16 * 5, a // 16 * 32, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 8, a // 16 * 6, a // 16 * 32, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 8, a // 16 * 4, a // 16 * 2, a // 16 * 2), a // 16 * 2)
+        pygame.draw.rect(self.image, g4, (a // 16 * 9, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 22, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 13, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 13, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 13, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 13, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 13, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 18, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 18, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 18, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 18, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 18, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 22, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 25, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 29, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 29, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 29, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 29, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 29, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 34, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 34, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 34, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 34, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 34, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 38, a // 16 * 4, a // 16 * 2, a // 16 * 2), a // 16 * 2)
+        pygame.draw.rect(self.image, g4, (a // 16 * 38, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 40, a // 16, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 41, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 41, a // 16 * 6, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 45, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 41, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 41, a // 16 * 1, a // 16 * 4, a // 16 * 3), a // 16 * 2)
+        pygame.draw.rect(self.image, w, (a // 16 * 41, a // 16 * 2, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 41, 0, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 45, a // 16 * 1, a // 16, a // 16 * 5), a // 16)
         self._x = x
-        self.x = self._x - int(a*1.5)
+        self.x = self._x - int(a * 1.5)
         self.rect.x = self.x
         self.rect = self.image.get_rect().move(self.rect.x, self.rect.y)
         self.f2()
@@ -655,78 +672,78 @@ class Platform(pygame.sprite.Sprite):
         g5 = (80, 80, 80)
         g6 = (130, 130, 130)
         self.b = (0, 0, 255)
-        self.image = pygame.Surface((a*4, a//2), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, w, (0, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*63, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*3, 0, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*3, a//16, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*3, a//16*2, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*2, a//16*1, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*2, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*2, a//16*3, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*2, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*2, a//16*6, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*6, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*3, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*6, 0, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, b, (a//16*7, a//16, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, 0, a//16*48, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16, a//16*48, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*8, a//16*2, a//16*48, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16*3, a//16*48, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, a//16*4, a//16*48, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*8, a//16*5, a//16*48, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*8, a//16*6, a//16*48, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*10, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*10, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*10, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*10, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*10, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*14, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*14, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*17, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*21, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*21, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*21, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*21, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*21, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*26, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*26, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*26, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*26, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*26, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*30, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*30, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*33, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*37, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*37, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*37, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*37, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*37, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*42, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*42, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*42, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*42, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*42, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*46, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*46, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*49, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*53, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*53, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*53, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*53, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*53, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*56, a//16, a//16, a//16*6), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*57, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*57, a//16*6, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r4, (a//16*61, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*57, a//16*4, a//16*4, a//16*2), a//16)
-        pygame.draw.rect(self.image, r2, (a//16*57, a//16*1, a//16*4, a//16*3), a//16*2)
-        pygame.draw.rect(self.image, w, (a//16*57, a//16*2, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, r1, (a//16*57, 0, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, r3, (a//16*61, a//16*1, a//16, a//16*5), a//16)
+        self.image = pygame.Surface((a * 4, a // 2), pygame.SRCALPHA, 32)
+        pygame.draw.rect(self.image, w, (0, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 63, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 3, 0, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 3, a // 16, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 3, a // 16 * 2, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 2, a // 16 * 1, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 2, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 2, a // 16 * 3, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 2, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 2, a // 16 * 6, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 6, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 3, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 6, 0, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 7, a // 16, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, 0, a // 16 * 48, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16, a // 16 * 48, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 8, a // 16 * 2, a // 16 * 48, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16 * 3, a // 16 * 48, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, a // 16 * 4, a // 16 * 48, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 8, a // 16 * 5, a // 16 * 48, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 8, a // 16 * 6, a // 16 * 48, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 10, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 10, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 10, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 10, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 10, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 14, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 14, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 17, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 21, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 21, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 21, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 21, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 21, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 26, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 26, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 26, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 26, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 26, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 30, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 30, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 33, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 37, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 37, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 37, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 37, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 37, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 42, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 42, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 42, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 42, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 42, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 46, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 46, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 49, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 53, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 53, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 53, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 53, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 53, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 56, a // 16, a // 16, a // 16 * 6), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 57, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 57, a // 16 * 6, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r4, (a // 16 * 61, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 57, a // 16 * 4, a // 16 * 4, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, r2, (a // 16 * 57, a // 16 * 1, a // 16 * 4, a // 16 * 3), a // 16 * 2)
+        pygame.draw.rect(self.image, w, (a // 16 * 57, a // 16 * 2, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, r1, (a // 16 * 57, 0, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, r3, (a // 16 * 61, a // 16 * 1, a // 16, a // 16 * 5), a // 16)
         self._x = x
-        self.x = self._x - a*2
+        self.x = self._x - a * 2
         self.rect.x = self.x
         self.rect = self.image.get_rect().move(self.rect.x, self.rect.y)
         self.f3()
@@ -746,145 +763,145 @@ class Platform(pygame.sprite.Sprite):
         blue = (0, 0, 150)
         y1 = (200, 200, 0)
         y2 = (255, 255, 150)
-        self.image = pygame.Surface((a*2, a//2), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, g4, (a//16*3, 0, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*2, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*3, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*4, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*5, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*6, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*2, a//16*2, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*4, a//16*2, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*6, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (0, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16, a//16*3, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*4, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, blue, (a//16*5, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*6, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (0, a//16*4, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, blue, (a//16*4, a//16*4, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*6, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (0, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16, a//16*5, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*4, a//16*5, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*6, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16, a//16*6, a//16*6, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*4, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*2, a//16*7, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*3, a//16*7, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*7, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*7, a//16*2, a//16, a//16*2), a//16)
+        self.image = pygame.Surface((a * 2, a // 2), pygame.SRCALPHA, 32)
+        pygame.draw.rect(self.image, g4, (a // 16 * 3, 0, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 2, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 3, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 4, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 5, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 6, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 2, a // 16 * 2, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 4, a // 16 * 2, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 6, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (0, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16, a // 16 * 3, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 4, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, blue, (a // 16 * 5, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 6, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (0, a // 16 * 4, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, blue, (a // 16 * 4, a // 16 * 4, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 6, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (0, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16, a // 16 * 5, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 4, a // 16 * 5, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 6, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16, a // 16 * 6, a // 16 * 6, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 4, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 2, a // 16 * 7, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 3, a // 16 * 7, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 7, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 7, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
 
-        pygame.draw.rect(self.image, w, (a//16*8, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*8, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*8, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*8, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*8, a//16*4, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*8, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*8, a//16*7, a//16*16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*9, 0, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*9, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*9, a//16*3, a//16, a//16*4), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*10, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*10, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*10, a//16*3, a//16, a//16*4), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*11, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*11, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*11, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*11, a//16*4, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*11, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*12, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*12, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*12, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*12, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*12, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, y1, (a//16*12, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*12, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*13, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*13, a//16, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*13, a//16*2, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*13, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*13, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*13, a//16*6, a//16*6, a//16), a//16)
-        pygame.draw.rect(self.image, y1, (a//16*14, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*14, a//16*2, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*14, a//16*3, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*14, a//16*4, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*14, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, y2, (a//16*15, 0, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, y1, (a//16*15, a//16, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*15, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, y1, (a//16*16, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*16, a//16*4, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*16, a//16*5, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, y1, (a//16*17, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*17, a//16, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*18, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*18, a//16*2, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*18, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*18, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*19, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*19, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*19, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*19, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*19, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, y1, (a//16*19, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*19, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*20, a//16, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*20, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*20, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*20, a//16*4, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*20, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, y1, (a//16*21, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*21, a//16*3, a//16, a//16*4), a//16)
-        pygame.draw.rect(self.image, w, (a//16*22, 0, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*22, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*22, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*22, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*22, a//16*4, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, g6, (a//16*22, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*23, 0, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*23, a//16*2, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*23, a//16*3, a//16, a//16*4), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*24, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*24, a//16*3, a//16, a//16), a//16)
+        pygame.draw.rect(self.image, w, (a // 16 * 8, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 8, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 8, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 8, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 8, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 8, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 8, a // 16 * 7, a // 16 * 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 9, 0, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 9, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 9, a // 16 * 3, a // 16, a // 16 * 4), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 10, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 10, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 10, a // 16 * 3, a // 16, a // 16 * 4), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 11, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 11, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 11, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 11, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 11, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 12, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 12, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 12, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 12, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 12, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, y1, (a // 16 * 12, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 12, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 13, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 13, a // 16, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 13, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 13, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 13, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 13, a // 16 * 6, a // 16 * 6, a // 16), a // 16)
+        pygame.draw.rect(self.image, y1, (a // 16 * 14, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 14, a // 16 * 2, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 14, a // 16 * 3, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 14, a // 16 * 4, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 14, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, y2, (a // 16 * 15, 0, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, y1, (a // 16 * 15, a // 16, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 15, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, y1, (a // 16 * 16, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 16, a // 16 * 4, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 16, a // 16 * 5, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, y1, (a // 16 * 17, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 17, a // 16, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 18, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 18, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 18, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 18, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 19, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 19, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 19, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 19, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 19, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, y1, (a // 16 * 19, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 19, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 20, a // 16, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 20, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 20, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 20, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 20, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, y1, (a // 16 * 21, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 21, a // 16 * 3, a // 16, a // 16 * 4), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 22, 0, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 22, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 22, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 22, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 22, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g6, (a // 16 * 22, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 23, 0, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 23, a // 16 * 2, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 23, a // 16 * 3, a // 16, a // 16 * 4), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 24, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 24, a // 16 * 3, a // 16, a // 16), a // 16)
 
-        pygame.draw.rect(self.image, g4, (a//16*25, 0, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*25, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*26, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g1, (a//16*27, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*28, a//16, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*29, a//16, a//16, a//16), a//16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 25, 0, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 25, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 26, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g1, (a // 16 * 27, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 28, a // 16, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 29, a // 16, a // 16, a // 16), a // 16)
 
-        pygame.draw.rect(self.image, w, (a//16*25, a//16*2, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*26, a//16*2, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, w, (a//16*28, a//16*2, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*30, a//16*2, a//16, a//16), a//16)
+        pygame.draw.rect(self.image, w, (a // 16 * 25, a // 16 * 2, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 26, a // 16 * 2, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 28, a // 16 * 2, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 30, a // 16 * 2, a // 16, a // 16), a // 16)
 
-        pygame.draw.rect(self.image, g5, (a//16*25, a//16*3, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, w, (a//16*26, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, blue, (a//16*27, a//16*3, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g5, (a//16*28, a//16*3, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*31, a//16*3, a//16, a//16*2), a//16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 25, a // 16 * 3, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, w, (a // 16 * 26, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, blue, (a // 16 * 27, a // 16 * 3, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g5, (a // 16 * 28, a // 16 * 3, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 31, a // 16 * 3, a // 16, a // 16 * 2), a // 16)
 
-        pygame.draw.rect(self.image, blue, (a//16*26, a//16*4, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*28, a//16*4, a//16*4, a//16), a//16)
+        pygame.draw.rect(self.image, blue, (a // 16 * 26, a // 16 * 4, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 28, a // 16 * 4, a // 16 * 4, a // 16), a // 16)
 
-        pygame.draw.rect(self.image, g4, (a//16*25, a//16*5, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*26, a//16*5, a//16*2, a//16), a//16)
-        pygame.draw.rect(self.image, g4, (a//16*28, a//16*5, a//16*3, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*31, a//16*5, a//16, a//16), a//16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 25, a // 16 * 5, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 26, a // 16 * 5, a // 16 * 2, a // 16), a // 16)
+        pygame.draw.rect(self.image, g4, (a // 16 * 28, a // 16 * 5, a // 16 * 3, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 31, a // 16 * 5, a // 16, a // 16), a // 16)
 
-        pygame.draw.rect(self.image, g3, (a//16*25, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*26, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*27, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g2, (a//16*28, a//16*6, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, g3, (a//16*29, a//16*6, a//16*2, a//16), a//16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 25, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 26, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 27, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g2, (a // 16 * 28, a // 16 * 6, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 29, a // 16 * 6, a // 16 * 2, a // 16), a // 16)
 
-        pygame.draw.rect(self.image, g3, (a//16*26, a//16*7, a//16*4, a//16), a//16)
-        pygame.draw.rect(self.image, b, (a//16*7, a//16*4, a//16, a//16*3), a//16)
-        pygame.draw.rect(self.image, b, (a//16*24, a//16*4, a//16, a//16*3), a//16)
+        pygame.draw.rect(self.image, g3, (a // 16 * 26, a // 16 * 7, a // 16 * 4, a // 16), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 7, a // 16 * 4, a // 16, a // 16 * 3), a // 16)
+        pygame.draw.rect(self.image, b, (a // 16 * 24, a // 16 * 4, a // 16, a // 16 * 3), a // 16)
 
         self._x = x
         self.x = self._x - a
@@ -900,7 +917,6 @@ class Platform(pygame.sprite.Sprite):
                 self.rect.x = self.field
             elif self.rect.x > self.field + self.size - self.rect.width:
                 self.rect.x = self.field + self.size - self.rect.width
-
 
     def f1(self):
         a = self.a
@@ -919,12 +935,12 @@ class Platform(pygame.sprite.Sprite):
                 self.coef2 -= 0.01
             else:
                 self.ud = True
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (0, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16, a//16*2, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef2), (a//16, a//16*4, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16*31, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16*30, a//16*2, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef2), (a//16*30, a//16*4, a//16, a//16*2), a//16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (0, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef2), (a // 16, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16 * 31, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16 * 30, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef2), (a // 16 * 30, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
 
     def f2(self):
         a = self.a
@@ -943,12 +959,12 @@ class Platform(pygame.sprite.Sprite):
                 self.coef2 -= 0.01
             else:
                 self.ud = True
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (0, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16, a//16*2, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef2), (a//16, a//16*4, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16*47, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16*46, a//16*2, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef2), (a//16*46, a//16*4, a//16, a//16*2), a//16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (0, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef2), (a // 16, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16 * 47, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16 * 46, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef2), (a // 16 * 46, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
 
     def f3(self):
         a = self.a
@@ -967,17 +983,17 @@ class Platform(pygame.sprite.Sprite):
                 self.coef2 -= 0.01
             else:
                 self.ud = True
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (0, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16, a//16*2, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef2), (a//16, a//16*4, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16*63, a//16*4, a//16, a//16), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef1), (a//16*62, a//16*2, a//16, a//16*2), a//16)
-        pygame.draw.rect(self.image, f(self.b, self.coef2), (a//16*62, a//16*4, a//16, a//16*2), a//16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (0, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef2), (a // 16, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16 * 63, a // 16 * 4, a // 16, a // 16), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef1), (a // 16 * 62, a // 16 * 2, a // 16, a // 16 * 2), a // 16)
+        pygame.draw.rect(self.image, f(self.b, self.coef2), (a // 16 * 62, a // 16 * 4, a // 16, a // 16 * 2), a // 16)
 
     def l(self):
         if self.islaser:
-            L(self.a, self.rect.x + self.a//16*11, self.y + self.a//16, self.board.ls)
-            L(self.a, self.rect.x + self.a//16*21, self.y + self.a//16, self.board.ls)
+            L(self.a, self.rect.x + self.a // 16 * 11, self.y + self.a // 16, self.board.ls)
+            L(self.a, self.rect.x + self.a // 16 * 21, self.y + self.a // 16, self.board.ls)
 
 
 class Ball(pygame.sprite.Sprite):
@@ -988,11 +1004,11 @@ class Ball(pygame.sprite.Sprite):
         self.y = y
         self.x = x
         self.image = pygame.Surface((a, a), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, (255, 255, 255), (0, a//5, a//5, a//5*3))
-        pygame.draw.rect(self.image, (255, 255, 255), (a//5*4, a//5, a//5, a//5*3), a//5)
-        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a//5, 0, a//5*3, a//5), a//5)
-        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a//5, a//5*4, a//5*3, a//5), a//5)
-        pygame.draw.rect(self.image, (0, 0, 255), (a//5, a//5, a//5*3, a//5*3), a//5*3)
+        pygame.draw.rect(self.image, (255, 255, 255), (0, a // 5, a // 5, a // 5 * 3))
+        pygame.draw.rect(self.image, (255, 255, 255), (a // 5 * 4, a // 5, a // 5, a // 5 * 3), a // 5)
+        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a // 5, 0, a // 5 * 3, a // 5), a // 5)
+        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a // 5, a // 5 * 4, a // 5 * 3, a // 5), a // 5)
+        pygame.draw.rect(self.image, (0, 0, 255), (a // 5, a // 5, a // 5 * 3, a // 5 * 3), a // 5 * 3)
         self.rect = self.image.get_rect().move(x, y)
         self.vx = 0
         self.vy = 0
@@ -1004,22 +1020,22 @@ class Ball(pygame.sprite.Sprite):
         a = self.a
         self.flag = False
         self.image = pygame.Surface((a, a), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, (255, 255, 255), (0, a//5, a//5, a//5*3))
-        pygame.draw.rect(self.image, (255, 255, 255), (a//5*4, a//5, a//5, a//5*3), a//5)
-        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a//5, 0, a//5*3, a//5), a//5)
-        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a//5, a//5*4, a//5*3, a//5), a//5)
-        pygame.draw.rect(self.image, (0, 0, 255), (a//5, a//5, a//5*3, a//5*3), a//5*3)
+        pygame.draw.rect(self.image, (255, 255, 255), (0, a // 5, a // 5, a // 5 * 3))
+        pygame.draw.rect(self.image, (255, 255, 255), (a // 5 * 4, a // 5, a // 5, a // 5 * 3), a // 5)
+        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a // 5, 0, a // 5 * 3, a // 5), a // 5)
+        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a // 5, a // 5 * 4, a // 5 * 3, a // 5), a // 5)
+        pygame.draw.rect(self.image, (0, 0, 255), (a // 5, a // 5, a // 5 * 3, a // 5 * 3), a // 5 * 3)
         self.rect = self.image.get_rect().move(self.rect.x, self.rect.y)
 
     def m(self):
         a = self.a
         self.flag = True
         self.image = pygame.Surface((a, a), pygame.SRCALPHA, 32)
-        pygame.draw.rect(self.image, (255, 255, 255), (0, a//5, a//5, a//5*3))
-        pygame.draw.rect(self.image, (255, 255, 255), (a//5*4, a//5, a//5, a//5*3), a//5)
-        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a//5, 0, a//5*3, a//5), a//5)
-        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a//5, a//5*4, a//5*3, a//5), a//5)
-        pygame.draw.rect(self.image, (0, 255, 0), (a//5, a//5, a//5*3, a//5*3), a//5*3)
+        pygame.draw.rect(self.image, (255, 255, 255), (0, a // 5, a // 5, a // 5 * 3))
+        pygame.draw.rect(self.image, (255, 255, 255), (a // 5 * 4, a // 5, a // 5, a // 5 * 3), a // 5)
+        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a // 5, 0, a // 5 * 3, a // 5), a // 5)
+        self.ball = pygame.draw.rect(self.image, (255, 255, 255), (a // 5, a // 5 * 4, a // 5 * 3, a // 5), a // 5)
+        pygame.draw.rect(self.image, (0, 255, 0), (a // 5, a // 5, a // 5 * 3, a // 5 * 3), a // 5 * 3)
         self.rect = self.image.get_rect().move(self.rect.x, self.rect.y)
 
     def platformhit(self):
@@ -1037,8 +1053,8 @@ class Ball(pygame.sprite.Sprite):
             self.pl.l()
         else:
             self.flight = True
-            self.vx = (x//abs(x)) * 500 // (x ** 2 + y ** 2) * x ** 2*4
-            self.vy = - (500 // (x ** 2 + y ** 2) * y ** 2)*4
+            self.vx = (x // abs(x)) * 500 // (x ** 2 + y ** 2) * x ** 2 * 4
+            self.vy = - (500 // (x ** 2 + y ** 2) * y ** 2) * 4
             self.update()
             self.update()
 
@@ -1046,7 +1062,7 @@ class Ball(pygame.sprite.Sprite):
         if not self.flight:
             self.x = self.pl.rect.x + self.pl.a * self.pl.flag // 2
             self.rect.x = self.x
-            self.c[0] = self.x*1000
+            self.c[0] = self.x * 1000
         else:
             self.c[0] += self.vx
             self.c[1] += self.vy
@@ -1060,8 +1076,9 @@ class Ball(pygame.sprite.Sprite):
 class Board:
     def __init__(self, width, height, highscore):
         self._lines = pygame.sprite.Group()
-        c_br = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1), ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2), ((255, 215, 0), float('inf'))]
-        self._ = 0 #пасхалка(при уничтожении 20 летающих врагов за уровень выполнится переход на новый уровень)
+        c_br = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1),
+                ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2), ((255, 215, 0), float('inf'))]
+        self._ = 0  # пасхалка(при уничтожении 20 летающих врагов за уровень выполнится переход на новый уровень)
         self.go = False
         self.c = 0
         self.score = 0
@@ -1081,18 +1098,28 @@ class Board:
         self.pl = Platform(self, self.cell_size1, self.cell_size1 + self.left, self.cell_size1 * 20 + self.top, self.p)
         self.pl.set_field_and_size(self.left, self.cell_size1 * width)
         self.b = pygame.sprite.Group()
-        self.ball = Ball(self.cell_size1//16*5, self.cell_size1 + self.left, self.cell_size1 * 20 + self.top - self.cell_size1//16*2+1, self.pl, self.b)
-        self.vrl = [Line(self.cell_size1//16*2, self.cell_size2*self.height, self.left+self.cell_size1//16*(15+16*i), self.top, self.vr) for i in range(-1, self.width)]
-        self.hrl = [Line(self.cell_size1*self.width, self.cell_size2//8*2, self.left, self.top+self.cell_size2//8*(7+8*i), self.hr) for i in range(-1, self.height)]
-        self.fons = [[Fon(self.cell_size1, i*self.cell_size1+self.left, j*self.cell_size1+self.top, self.fon) for i in range(self.width)] for j in range(self.height//2)]
-        self.board = [[random.choice([Block(self, self.cell_size1, self.cell_size2, i*self.cell_size1+self.left, j*self.cell_size2+self.top, self.sprites, *(random.choice(c_br))), None, None]) for i in range(self.width)] for j in range(self.height-10)]+[[None for i in range(self.width)] for j in range(10)]
+        self.ball = Ball(self.cell_size1 // 16 * 5, self.cell_size1 + self.left,
+                         self.cell_size1 * 20 + self.top - self.cell_size1 // 16 * 2 + 1, self.pl, self.b)
+        self.vrl = [Line(self.cell_size1 // 16 * 2, self.cell_size2 * self.height,
+                         self.left + self.cell_size1 // 16 * (15 + 16 * i), self.top, self.vr) for i in
+                    range(-1, self.width)]
+        self.hrl = [Line(self.cell_size1 * self.width, self.cell_size2 // 8 * 2, self.left,
+                         self.top + self.cell_size2 // 8 * (7 + 8 * i), self.hr) for i in range(-1, self.height)]
+        self.fons = [
+            [Fon(self.cell_size1, i * self.cell_size1 + self.left, j * self.cell_size1 + self.top, self.fon) for i in
+             range(self.width)] for j in range(self.height // 2)]
+        self.board = [[random.choice([Block(self, self.cell_size1, self.cell_size2, i * self.cell_size1 + self.left,
+                                            j * self.cell_size2 + self.top, self.sprites, *(random.choice(c_br))), None,
+                                      None]) for i in range(self.width)] for j in range(self.height - 10)] + [
+                         [None for i in range(self.width)] for j in range(10)]
         self.ls = pygame.sprite.Group()
         self.gt = pygame.sprite.Group()
         self.cs = pygame.sprite.Group()
         self.f = pygame.sprite.Group()
 
     def set_view(self, left, top, cell_size1, cell_size2):
-        c_br = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1), ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2), ((255, 215, 0), float('inf'))]
+        c_br = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1),
+                ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2), ((255, 215, 0), float('inf'))]
         self.left = left
         self.top = top
         self.cell_size1 = cell_size1
@@ -1107,14 +1134,22 @@ class Board:
         for i in (self.vrl + self.hrl):
             i.kill()
         self.p = pygame.sprite.Group()
-        self.pl = Platform(self, self.cell_size1, self.cell_size1 + self.left, self.cell_size2*20+self.top, self.p)
+        self.pl = Platform(self, self.cell_size1, self.cell_size1 + self.left, self.cell_size2 * 20 + self.top, self.p)
         self.pl.set_field_and_size(self.left, self.cell_size1 * self.width)
         self.b = pygame.sprite.Group()
-        self.ball = Ball(self.cell_size1//16*5, self.cell_size1 + self.left, self.cell_size2 * 20 + self.top - self.cell_size2//8*6+3, self.pl, self.b)
-        self.vrl = [Line(2, self.cell_size2*self.height, self.left+self.cell_size1*(i+1)-1, self.top, self.vr) for i in range(-1, self.width)]
-        self.hrl = [Line(self.cell_size1*self.width, 2, self.left, self.top+self.cell_size2*(i+1)-1, self.hr) for i in range(-1, self.height)]
-        self.fons = [[Fon(self.cell_size1, i*self.cell_size1+self.left, j*self.cell_size1+self.top, self.fon) for i in range(self.width)] for j in range(self.height//2)]
-        self.board = [[random.choice([Block(self, self.cell_size1, self.cell_size2, i*self.cell_size1+self.left, j*self.cell_size2+self.top, self.sprites, *(random.choice(c_br))), None, None]) for i in range(self.width)] for j in range(self.height-10)]+[[None for i in range(self.width)] for j in range(10)]
+        self.ball = Ball(self.cell_size1 // 16 * 5, self.cell_size1 + self.left,
+                         self.cell_size2 * 20 + self.top - self.cell_size2 // 8 * 6 + 3, self.pl, self.b)
+        self.vrl = [Line(2, self.cell_size2 * self.height, self.left + self.cell_size1 * (i + 1) - 1, self.top, self.vr)
+                    for i in range(-1, self.width)]
+        self.hrl = [Line(self.cell_size1 * self.width, 2, self.left, self.top + self.cell_size2 * (i + 1) - 1, self.hr)
+                    for i in range(-1, self.height)]
+        self.fons = [
+            [Fon(self.cell_size1, i * self.cell_size1 + self.left, j * self.cell_size1 + self.top, self.fon) for i in
+             range(self.width)] for j in range(self.height // 2)]
+        self.board = [[random.choice([Block(self, self.cell_size1, self.cell_size2, i * self.cell_size1 + self.left,
+                                            j * self.cell_size2 + self.top, self.sprites, *(random.choice(c_br))), None,
+                                      None]) for i in range(self.width)] for j in range(self.height - 10)] + [
+                         [None for i in range(self.width)] for j in range(10)]
         self.ls = pygame.sprite.Group()
         self.gt = pygame.sprite.Group()
         self.cs = pygame.sprite.Group()
@@ -1237,7 +1272,7 @@ class Board:
             random.seed(self.lvl)
             self.set_view(self.left, self.top, self.cell_size1, self.cell_size2)
             self._ = 0
-            return 
+            return
 
         txt = pygame.font.Font(None, 50).render(f'HIGHSCORE', True, (255, 255, 255))
         r = txt.get_rect().move(self.left + self.width * self.cell_size1 + 50, 100)
@@ -1273,14 +1308,16 @@ class Board:
 
     def get_click(self, mouse_pos):
         self.ball.enter(4, 3)
-        if pygame.mouse.get_pos()[0] > self.left + self.width * self.cell_size1 + 50 and pygame.mouse.get_pos()[0] < self.left + self.width * self.cell_size1 + 50 + self.r.width:
+        if pygame.mouse.get_pos()[0] > self.left + self.width * self.cell_size1 + 50 and pygame.mouse.get_pos()[
+            0] < self.left + self.width * self.cell_size1 + 50 + self.r.width:
             if pygame.mouse.get_pos()[1] > 400 and pygame.mouse.get_pos()[1] < 400 + self.r.height:
                 self.pause = not self.pause
 
 
 pygame.init()
 pygame.display.set_caption('Arkanoid')
-pygame.display.set_icon(Ball(16, -1000, -1000,Platform(Board(2, 2, 0), 16, -1000, -1000, pygame.sprite.Group()), pygame.sprite.Group()).image)
+pygame.display.set_icon(Ball(16, -1000, -1000, Platform(Board(2, 2, 0), 16, -1000, -1000, pygame.sprite.Group()),
+                             pygame.sprite.Group()).image)
 clock = pygame.time.Clock()
 r = True
 try:
@@ -1292,6 +1329,8 @@ except:
 
         def close(self):
             del self
+
+
     f = __()
 board = Board(10, 24, int(f.read()))
 try:
@@ -1300,8 +1339,11 @@ except:
     class __:
         def read(self):
             return '0 0 0'
+
         def close(self):
             del self
+
+
     f = __()
 board.c = int(f.read().split()[0])
 try:
@@ -1312,8 +1354,7 @@ except:
             return '0 0 0'
 
         def close(self):
-             del self
-
+            del self
 
         f = __()
 board.lvl = int(f.read().split()[1])
@@ -1326,7 +1367,6 @@ except:
 
         def close(self):
             del self
-
 
         f = __()
 board.score = int(f.read().split()[2])
