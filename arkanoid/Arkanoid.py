@@ -1,3 +1,4 @@
+from __future__ import annotations
 import os
 import random
 import time
@@ -18,7 +19,6 @@ class Line(pygame.sprite.Sprite):
         self.x = x
         self.y = y
 
-
 class T(pygame.sprite.Sprite):
     def __init__(self, a, b, x, y, g):
         super().__init__(g)
@@ -30,7 +30,42 @@ class T(pygame.sprite.Sprite):
 
 
 class Block(pygame.sprite.Sprite):
-    def __init__(self, board,  a, b, x, y, group, col, breaking=1):
+    def __init__(self, board, a, b, x, y, group, col, breaking=1):
+        class HLine1(pygame.sprite.Sprite):
+            def __init__(self, block, group):
+                super().__init__(group)
+                self.image = pygame.Surface((block.a, 1), pygame.SRCALPHA, 32)
+                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, block.a, 1), 1)
+                self.rect = self.image.get_rect().move(block.x, block.y)
+                self.x = self.rect.x
+                self.y = self.rect.y
+
+        class HLine2(pygame.sprite.Sprite):
+            def __init__(self, block, group):
+                super().__init__(group)
+                self.image = pygame.Surface((block.a, 1), pygame.SRCALPHA, 32)
+                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, block.a, 1), 1)
+                self.rect = self.image.get_rect().move(block.x, block.y + block.rect.height - 1)
+                self.x = self.rect.x
+                self.y = self.rect.y
+
+        class VLine1(pygame.sprite.Sprite):
+            def __init__(self, block, group):
+                super().__init__(group)
+                self.image = pygame.Surface((1, block.b), pygame.SRCALPHA, 32)
+                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, 1, block.b), 1)
+                self.rect = self.image.get_rect().move(block.x, block.y)
+                self.x = self.rect.x
+                self.y = self.rect.y
+
+        class VLine2(pygame.sprite.Sprite):
+            def __init__(self, block, group):
+                super().__init__(group)
+                self.image = pygame.Surface((1, block.b), pygame.SRCALPHA, 32)
+                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, 1, block.b), 1)
+                self.rect = self.image.get_rect().move(block.x + block.rect.width - 1, block.y)
+                self.x = self.rect.x
+                self.y = self.rect.y
         self.board = board
         self.xy = (x, y)
         if board.lvl < 10:
@@ -94,6 +129,10 @@ class Block(pygame.sprite.Sprite):
         self.coef0 = 1
         self.iscolide = 0
         self.isnotadded = True
+        self.vl1 = VLine1(self, board._lines)
+        self.vl2 = VLine2(self, board._lines)
+        self.hl1 = HLine1(self, board._lines)
+        self.hl2 = HLine2(self, board._lines)
 
     def collide__(self):
         if self.br == 0:
@@ -105,6 +144,18 @@ class Block(pygame.sprite.Sprite):
             Capsule(Capsule.cols[self.char], self.a, self.b, self.rect.x, self.rect.y, self.char, self.board.cs)
         else:
             self.iscolide = 1
+
+    def _ball(self, ball: Ball):
+        if ball.flag:
+            return
+        if pygame.sprite.collide_mask(ball, self.vl1):
+            ball.vx = - abs(ball.vy) + int(os.urandom(1).hex(), 16)//64
+        if pygame.sprite.collide_mask(ball, self.vl2):
+            ball.vx = abs(ball.vy) + int(os.urandom(1).hex(), 16)//64
+        if pygame.sprite.collide_mask(ball, self.hl1):
+            ball.vy = - abs(ball.vy) + int(os.urandom(1).hex(), 16)//64
+        if pygame.sprite.collide_mask(ball, self.hl2):
+            ball.vy = abs(ball.vy) + int(os.urandom(1).hex(), 16)//64
 
     def update(self):
         if self.iscolide == 1 and (self.f(self.col, self.coef)[0] != 255 and self.f(self.col, self.coef)[1] != 255 and self.f(self.col, self.coef)[2] != 255):
@@ -971,20 +1022,6 @@ class Ball(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, (0, 255, 0), (a//5, a//5, a//5*3, a//5*3), a//5*3)
         self.rect = self.image.get_rect().move(self.rect.x, self.rect.y)
 
-    def verticalhit(self):
-        if self.flag:
-            return
-        self.vx *= -1
-        self.vx += int(os.urandom(1).hex(), 16) // 64
-        self.pl.board.upscore(10)
-
-    def horizontalhit(self):
-        if self.flag:
-            return
-        self.vy *= -1
-        self.vy += int(os.urandom(1).hex(), 16) // 64
-        self.pl.board.upscore(10)
-
     def platformhit(self):
         if self.pl.rect.x + self.pl.a // 2 > self.rect.center[0]:
             self.enter(3, -4, False)
@@ -994,13 +1031,6 @@ class Ball(pygame.sprite.Sprite):
             self.enter(3, 4, False)
         else:
             self.enter(4, 3, False)
-
-    def verticalandhorizontalhit(self):
-        if self.flag:
-            return
-        self.horizontalhit()
-        self.verticalhit()
-        self.pl.board.upscore(10)
 
     def enter(self, y, x, t=True):
         if self.flight and t:
@@ -1029,53 +1059,7 @@ class Ball(pygame.sprite.Sprite):
 
 class Board:
     def __init__(self, width, height, highscore):
-        class Hor1(pygame.sprite.Sprite):
-            def __init__(self, ball, group):
-                super().__init__(group)
-                self.b = ball
-                self.image = pygame.Surface((ball.a - 2, 1), pygame.SRCALPHA, 32)
-                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, ball.a - 2, 1), 1)
-                self.rect = self.image.get_rect().move(ball.rect.x + 1, ball.rect.y)
-
-            def update(self):
-                self.rect.x = self.b.rect.x + 1
-                self.rect.y = self.b.rect.y
-
-        class Hor2(pygame.sprite.Sprite):
-            def __init__(self, ball, group):
-                super().__init__(group)
-                self.b = ball
-                self.image = pygame.Surface((ball.a - 2, 1), pygame.SRCALPHA, 32)
-                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, ball.a - 2, 1), 1)
-                self.rect = self.image.get_rect().move(ball.rect.x + 1, ball.rect.y + self.b.a - 1)
-
-            def update(self):
-                self.rect.x = self.b.rect.x + 1
-                self.rect.y = self.b.rect.y + self.b.a - 1
-
-        class Ver1(pygame.sprite.Sprite):
-            def __init__(self, ball, group):
-                super().__init__(group)
-                self.b = ball
-                self.image = pygame.Surface((1, ball.a - 2), pygame.SRCALPHA, 32)
-                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, 1, ball.a - 2), 1)
-                self.rect = self.image.get_rect().move(ball.rect.x, ball.rect.y + 1)
-
-            def update(self):
-                self.rect.x = self.b.rect.x
-                self.rect.y = self.b.rect.y + 1
-
-        class Ver2(pygame.sprite.Sprite):
-            def __init__(self, ball, group):
-                super().__init__(group)
-                self.b = ball
-                self.image = pygame.Surface((1, ball.a - 2), pygame.SRCALPHA, 32)
-                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, 1, ball.a - 2), 1)
-                self.rect = self.image.get_rect().move(ball.rect.x + self.b.a - 1, ball.rect.y + 1)
-
-            def update(self):
-                self.rect.x = self.b.rect.x + self.b.a - 1
-                self.rect.y = self.b.rect.y + 1
+        self._lines = pygame.sprite.Group()
 
         c_br = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1), ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2), ((255, 215, 0), float('inf'))]
         self._ = 0 #пасхалка(при уничтожении 20 летающих врагов за уровень выполнится переход на новый уровень)
@@ -1099,10 +1083,6 @@ class Board:
         self.pl.set_field_and_size(self.left, self.cell_size1 * width)
         self.b = pygame.sprite.Group()
         self.ball = Ball(self.cell_size1//16*5, self.cell_size1 + self.left, self.cell_size1 * 20 + self.top - self.cell_size1//16*2+1, self.pl, self.b)
-        self.v = pygame.sprite.Group()
-        self.h = pygame.sprite.Group()
-        self.vl = [Ver1(self.ball, self.v), Ver2(self.ball, self.v)]
-        self.hl = [Hor1(self.ball, self.h), Hor2(self.ball, self.h)]
         self.vrl = [Line(self.cell_size1//16*2, self.cell_size2*self.height, self.left+self.cell_size1//16*(15+16*i), self.top, self.vr) for i in range(-1, self.width)]
         self.hrl = [Line(self.cell_size1*self.width, self.cell_size2//8*2, self.left, self.top+self.cell_size2//8*(7+8*i), self.hr) for i in range(-1, self.height)]
         self.fons = [[Fon(self.cell_size1, i*self.cell_size1+self.left, j*self.cell_size1+self.top, self.fon) for i in range(self.width)] for j in range(self.height//2)]
@@ -1113,56 +1093,9 @@ class Board:
         self.f = pygame.sprite.Group()
 
     def set_view(self, left, top, cell_size1, cell_size2):
-        class Hor1(pygame.sprite.Sprite):
-            def __init__(self, ball, group):
-                super().__init__(group)
-                self.b = ball
-                self.image = pygame.Surface((ball.a - 2, 1), pygame.SRCALPHA, 32)
-                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, ball.a - 2, 1), 1)
-                self.rect = self.image.get_rect().move(ball.rect.x + 1, ball.rect.y)
-
-            def update(self):
-                self.rect.x = self.b.rect.x + 1
-                self.rect.y = self.b.rect.y
-
-        class Hor2(pygame.sprite.Sprite):
-            def __init__(self, ball, group):
-                super().__init__(group)
-                self.b = ball
-                self.image = pygame.Surface((ball.a - 2, 1), pygame.SRCALPHA, 32)
-                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, ball.a - 2, 1), 1)
-                self.rect = self.image.get_rect().move(ball.rect.x + 1, ball.rect.y + self.b.a - 1)
-
-            def update(self):
-                self.rect.x = self.b.rect.x + 1
-                self.rect.y = self.b.rect.y + self.b.a - 1
-
-        class Ver1(pygame.sprite.Sprite):
-            def __init__(self, ball, group):
-                super().__init__(group)
-                self.b = ball
-                self.image = pygame.Surface((1, ball.a - 2), pygame.SRCALPHA, 32)
-                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, 1, ball.a - 2), 1)
-                self.rect = self.image.get_rect().move(ball.rect.x, ball.rect.y + 1)
-
-            def update(self):
-                self.rect.x = self.b.rect.x
-                self.rect.y = self.b.rect.y + 1
-
-        class Ver2(pygame.sprite.Sprite):
-            def __init__(self, ball, group):
-                super().__init__(group)
-                self.b = ball
-                self.image = pygame.Surface((1, ball.a - 2), pygame.SRCALPHA, 32)
-                pygame.draw.rect(self.image, (0, 0, 0), (0, 0, 1, ball.a - 2), 1)
-                self.rect = self.image.get_rect().move(ball.rect.x + self.b.a - 1, ball.rect.y + 1)
-
-            def update(self):
-                self.rect.x = self.b.rect.x + self.b.a - 1
-                self.rect.y = self.b.rect.y + 1
 
         c_br = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1), ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2), ((255, 215, 0), float('inf'))]
-        c_br2 = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1), ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2)]
+
         self.left = left
         self.top = top
         self.cell_size1 = cell_size1
@@ -1181,27 +1114,17 @@ class Board:
         self.pl.set_field_and_size(self.left, self.cell_size1 * self.width)
         self.b = pygame.sprite.Group()
         self.ball = Ball(self.cell_size1//16*5, self.cell_size1 + self.left, self.cell_size2 * 20 + self.top - self.cell_size2//8*6+3, self.pl, self.b)
-        self.v = pygame.sprite.Group()
-        self.h = pygame.sprite.Group()
-        self.vl = [Ver1(self.ball, self.v), Ver2(self.ball, self.v)]
-        self.hl = [Hor1(self.ball, self.h), Hor2(self.ball, self.h)]
-        self.vrl = [Line(self.cell_size1//16*2, self.cell_size2*self.height, self.left+self.cell_size1//16*(15+16*i), self.top, self.vr) for i in range(-1, self.width)]
-        self.hrl = [Line(self.cell_size1*self.width, self.cell_size2//8*2, self.left, self.top+self.cell_size2//8*(7+8*i), self.hr) for i in range(-1, self.height)]
+        self.vrl = [Line(2, self.cell_size2*self.height, self.left+self.cell_size1*(i+1)-1, self.top, self.vr) for i in range(-1, self.width)]
+        self.hrl = [Line(self.cell_size1*self.width, 2, self.left, self.top+self.cell_size2*(i+1)-1, self.hr) for i in range(-1, self.height)]
         self.fons = [[Fon(self.cell_size1, i*self.cell_size1+self.left, j*self.cell_size1+self.top, self.fon) for i in range(self.width)] for j in range(self.height//2)]
-        if self.lvl >= 20:
-            self.board = [[random.choice([Block(self, self.cell_size1, self.cell_size2, i*self.cell_size1+self.left, j*self.cell_size2+self.top, self.sprites, *(random.choice(c_br))), None, None]) for i in range(self.width)] for j in range(self.height-10)]+[[None for i in range(self.width)] for j in range(10)]
-        else:
-            self.board = [[random.choice([Block(self, self.cell_size1, self.cell_size2, i * self.cell_size1 + self.left,
-                                                j * self.cell_size2 + self.top, self.sprites, *(random.choice(c_br2))),
-                                          None, None]) for i in range(self.width)] for j in range(self.height - 10)] + [
-                             [None for i in range(self.width)] for j in range(10)]
-
+        self.board = [[random.choice([Block(self, self.cell_size1, self.cell_size2, i*self.cell_size1+self.left, j*self.cell_size2+self.top, self.sprites, *(random.choice(c_br))), None, None]) for i in range(self.width)] for j in range(self.height-10)]+[[None for i in range(self.width)] for j in range(10)]
         self.ls = pygame.sprite.Group()
         self.gt = pygame.sprite.Group()
         self.cs = pygame.sprite.Group()
         self.f = pygame.sprite.Group()
 
     def render(self, screen):
+        self._lines.draw(screen)
         if self.pause:
             return
         self.ls.update()
@@ -1213,24 +1136,13 @@ class Board:
                         continue
                     self.board[i][j].update()
                     if pygame.sprite.spritecollide(self.board[i][j], self.b, False):
-                        flag = True
-                        if pygame.sprite.groupcollide(self.h, self.hr, False, False):
-                            if pygame.sprite.spritecollide(self.board[i][j], self.h, False):
-                                self.ball.horizontalhit()
-                                self.ball.update()
-                                flag = False
-                        if pygame.sprite.groupcollide(self.v, self.vr, False, False):
-                            if pygame.sprite.spritecollide(self.board[i][j], self.v, False):
-                                self.ball.verticalhit()
-                                self.ball.update()
-                                flag = False
-                        if flag:
-                            continue
+                        self.board[i][j]._ball(self.ball)
                         self.board[i][j].collide__()
                         if self.ball.flag:
                             self.board[i][j].collide__()
                     if pygame.sprite.spritecollide(self.board[i][j], self.ls, True):
                         self.board[i][j].collide__()
+        self.ball.update()
 
         # if len(pygame.sprite.groupcollide(self.b, self.hr, False, False)):
         #     if pygame.sprite.groupcollide(self.b, self.sprites, False, False):
@@ -1296,10 +1208,6 @@ class Board:
                 self.set_view(self.left, self.top, self.cell_size1, self.cell_size2)
                 self.upscore(2000)
                 return
-        self.v.update()
-        self.h.update()
-        self.v.draw(screen)
-        self.h.draw(screen)
         self.hr.draw(screen)
         self.vr.draw(screen)
         # 2 пред.строки рисуют сетку(она должна быть чёрной(совпадать с фоном) и быть ПОД остальными спрайтами
@@ -1332,14 +1240,6 @@ class Board:
             random.seed(self.lvl)
             self.set_view(self.left, self.top, self.cell_size1, self.cell_size2)
             self._ = 0
-
-            def x(g):
-                try:
-                    return g.char
-                except:
-                    return None
-
-            print(sum([[x(j) for j in i].count('E') for i in board.board]))
             return 
 
         txt = pygame.font.Font(None, 50).render(f'HIGHSCORE', True, (255, 255, 255))
@@ -1522,12 +1422,6 @@ while r:
     lvl = board.lvl
     f.close()
     board.set_view(50, 50, 48, 24)
-    def x(g):
-        try:
-            return g.char
-        except:
-            return None
-    print(sum([[x(j) for j in i].count('L') for i in board.board]))
     # timer = time.time()
     # c = 0
     while running:
