@@ -149,13 +149,13 @@ class Block(pygame.sprite.Sprite):
         if ball.flag:
             return
         if pygame.sprite.collide_mask(ball, self.vl1):
-            ball.vx = - abs(ball.vy) + int(os.urandom(1).hex(), 16)//64
+            ball.vx = - abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16))//16
         if pygame.sprite.collide_mask(ball, self.vl2):
-            ball.vx = abs(ball.vy) + int(os.urandom(1).hex(), 16)//64
+            ball.vx = abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16))//16
         if pygame.sprite.collide_mask(ball, self.hl1):
-            ball.vy = - abs(ball.vy) + int(os.urandom(1).hex(), 16)//64
+            ball.vy = - abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16))//16
         if pygame.sprite.collide_mask(ball, self.hl2):
-            ball.vy = abs(ball.vy) + int(os.urandom(1).hex(), 16)//64
+            ball.vy = abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16))//16
 
     def update(self):
         if self.iscolide == 1 and (self.f(self.col, self.coef)[0] != 255 and self.f(self.col, self.coef)[1] != 255 and self.f(self.col, self.coef)[2] != 255):
@@ -1037,8 +1037,8 @@ class Ball(pygame.sprite.Sprite):
             self.pl.l()
         else:
             self.flight = True
-            self.vx = (x//abs(x)) * 500 // (x ** 2 + y ** 2) * x ** 2*6
-            self.vy = - (500 // (x ** 2 + y ** 2) * y ** 2)*6
+            self.vx = (x//abs(x)) * 500 // (x ** 2 + y ** 2) * x ** 2*4
+            self.vy = - (500 // (x ** 2 + y ** 2) * y ** 2)*4
             self.update()
             self.update()
 
@@ -1060,7 +1060,6 @@ class Ball(pygame.sprite.Sprite):
 class Board:
     def __init__(self, width, height, highscore):
         self._lines = pygame.sprite.Group()
-
         c_br = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1), ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2), ((255, 215, 0), float('inf'))]
         self._ = 0 #пасхалка(при уничтожении 20 летающих врагов за уровень выполнится переход на новый уровень)
         self.go = False
@@ -1093,9 +1092,7 @@ class Board:
         self.f = pygame.sprite.Group()
 
     def set_view(self, left, top, cell_size1, cell_size2):
-
         c_br = [((255, 255, 255), 1), ((255, 255, 0), 1), ((255, 0, 255), 1), ((0, 255, 255), 1), ((255, 0, 0), 1), ((0, 255, 0), 1), ((0, 0, 255), 1), ((200, 200, 200), 2), ((255, 215, 0), float('inf'))]
-
         self.left = left
         self.top = top
         self.cell_size1 = cell_size1
@@ -1284,6 +1281,7 @@ class Board:
 pygame.init()
 pygame.display.set_caption('Arkanoid')
 pygame.display.set_icon(Ball(16, -1000, -1000,Platform(Board(2, 2, 0), 16, -1000, -1000, pygame.sprite.Group()), pygame.sprite.Group()).image)
+clock = pygame.time.Clock()
 r = True
 try:
     f = open('hs', 'r')
@@ -1422,10 +1420,7 @@ while r:
     lvl = board.lvl
     f.close()
     board.set_view(50, 50, 48, 24)
-    # timer = time.time()
-    # c = 0
     while running:
-        # c += 1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -1436,10 +1431,7 @@ while r:
             screen.fill((0, 0, 0))
             board.render(screen)
             pygame.display.flip()
-        # if time.time() - timer >= 1:
-        #     timer = time.time()
-        #     print(c)
-        #     c = 0
+        clock.tick(80)
     open('hs', 'w').write(str(board.hs))
     if not board.go:
         open('s&l', 'w').write(' '.join([str(board.c), str(board.lvl), str(board.score)]))
