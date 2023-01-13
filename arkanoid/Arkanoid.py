@@ -154,12 +154,16 @@ class Block(pygame.sprite.Sprite):
             return
         if pygame.sprite.collide_mask(ball, self.vl1):
             ball.vx = - abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16)) // 16
+            self.board.upscore(10)
         if pygame.sprite.collide_mask(ball, self.vl2):
             ball.vx = abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16)) // 16
+            self.board.upscore(10)
         if pygame.sprite.collide_mask(ball, self.hl1):
             ball.vy = - abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16)) // 16
+            self.board.upscore(10)
         if pygame.sprite.collide_mask(ball, self.hl2):
             ball.vy = abs(ball.vy) + (128 - int(os.urandom(1).hex(), 16)) // 16
+            self.board.upscore(10)
 
     def update(self):
         if self.iscolide == 1 and (self.f(self.col, self.coef)[0] != 255 and self.f(self.col, self.coef)[1] != 255 and
@@ -1170,6 +1174,7 @@ class Board:
                             self.board[i][j].collide__()
                     if pygame.sprite.spritecollide(self.board[i][j], self.ls, True):
                         self.board[i][j].collide__()
+                        self.upscore(10)
         self.ball.update()
         if pygame.sprite.spritecollide(self.ball, self.p, False):
             self.upscore(10)
@@ -1203,6 +1208,7 @@ class Board:
         pygame.sprite.spritecollide(self.hrl[0], self.ls, True)
         sc = pygame.sprite.spritecollide(self.pl, self.cs, True)
         if pygame.sprite.groupcollide(self.ls, self.f, True, True):
+            self.upscore(50)
             self._ += 5
             if self._ >= 100:
                 self._ = 0
@@ -1219,7 +1225,7 @@ class Board:
         pygame.sprite.spritecollide(self.hrl[-1], self.f, True)
         pygame.sprite.spritecollide(self.hrl[-1], self.cs, True)
         if pygame.sprite.spritecollide(self.ball, self.f, True):
-            self.upscore(10)
+            self.upscore(50)
             self.ball.vy = abs(self.ball.vy)
             self._ += 5
             if self._ >= 100:
